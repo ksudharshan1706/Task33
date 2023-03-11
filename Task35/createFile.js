@@ -1,8 +1,6 @@
 import express from "express";
 import fs from "fs";
 
-// const fs = require("fs");
-// const fs1 = fs;
 const app = express();
 
 app.post("/createTextFile", (req, res) => {
