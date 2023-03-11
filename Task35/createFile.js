@@ -6,7 +6,7 @@ const app = express();
 app.post("/createTextFile", (req, res) => {
   const folderPath = "backup";
   const fileName = `example1.txt`;
-  const fileContent = new Date().toString(); // Set the file content to the current timestamp
+  const fileContent = new Date().toString(); // Setting the file content to the current timestamp
 
   fs.writeFile(`${folderPath}/${fileName}`, fileContent, (err) => {
     if (err) {
