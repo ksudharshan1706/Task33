@@ -6,9 +6,8 @@ import fs from "fs";
 const app = express();
 
 app.post("/createTextFile", (req, res) => {
-  const folderPath = "backup"; // Replace with the path to your desired folder
-  const fileName = `example1.txt`; // Use the current timestamp to generate the filename
-
+  const folderPath = "backup";
+  const fileName = `example1.txt`;
   const fileContent = new Date().toString(); // Set the file content to the current timestamp
 
   fs.writeFile(`${folderPath}/${fileName}`, fileContent, (err) => {
@@ -22,8 +21,8 @@ app.post("/createTextFile", (req, res) => {
 });
 
 app.get("/readTextFile", (req, res) => {
-  const folderPath = "backup"; // Replace with the path to your desired folder
-  const fileName = "example1.txt"; // Replace with the desired file name
+  const folderPath = "backup";
+  const fileName = "example1.txt";
 
   fs.readFile(`${folderPath}/${fileName}`, "utf8", (err, data) => {
     if (err) {
