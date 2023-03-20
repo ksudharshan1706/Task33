@@ -1,1 +1,3 @@
 /mongoCommands.js
+.env
+/node_modules
