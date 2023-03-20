@@ -3,6 +3,7 @@ import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import { bookRouter } from "./routes/movies.js";
+import cors from "cors";
 import { userRouter } from "./routes/users.js";
 dotenv.config();
 //const express = require("express"); type in package.json should be commonjs // importing 3rd party package
@@ -15,6 +16,7 @@ export const client = new MongoClient(MONGO_URL); // dial
 await client.connect(); // call
 console.log("Mongo is connected !!!  ");
 
+app.use(cors());
 app.use(express.json());
 //Home page
 app.get(
