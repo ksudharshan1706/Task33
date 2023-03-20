@@ -1,7 +1,12 @@
 import express, { response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { genPassword, createUser, getUserByName } from "../helper.js";
+import {
+  genPassword,
+  createUser,
+  getUserByName,
+  getUserList,
+} from "../helper.js";
 
 const router = express.Router();
 router.post(
@@ -48,6 +53,16 @@ router.post(
     }
     const token = jwt.sign({ id: userFromDb._id }, process.env.SECRET_KEY);
     response.send({ message: "Successfully Logged in", token: token });
+  }
+);
+router.get(
+  "/list",
+  async function (
+    request,
+    response // similar to Routing setup in react
+  ) {
+    const result = await getUserList();
+    response.send(result);
   }
 );
 export const userRouter = router;

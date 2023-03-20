@@ -39,3 +39,7 @@ export async function getUserByName(userName) {
     .collection("users")
     .findOne({ userName: userName });
 }
+
+export async function getUserList() {
+  return await client.db("b39we").collection("users").find().toArray();
+}
