@@ -11,7 +11,6 @@ import {
 const router = express.Router();
 router.get(
   "/",
-  auth,
   async function (
     request,
     response // similar to Routing setup in react
