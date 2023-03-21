@@ -43,3 +43,17 @@ export async function getUserByName(userName) {
 export async function getUserList() {
   return await client.db("b39we").collection("users").find().toArray();
 }
+
+export async function getMaxId() {
+  return await client
+    .db("b39we")
+    .collection("movies")
+    .find()
+    .sort({ id: -1 })
+    .limit(1)
+    .toArray();
+}
+
+export async function insertNewMovie(movie) {
+  return await client.db("b39we").collection("movies").insertOne(movie);
+}

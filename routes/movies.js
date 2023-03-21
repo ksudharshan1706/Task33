@@ -6,6 +6,8 @@ import {
   updateMoviebyID,
   createMovies,
   deleteMoviebyID,
+  getMaxId,
+  insertNewMovie,
 } from "../helper.js";
 import { client } from "../index.js";
 
@@ -87,30 +89,22 @@ router.delete(
   }
 );
 
+//adding a movie
 router.post(
   "/",
   async function (
     request,
     response // similar to Routing setup in react
   ) {
-    const data = request.body;
+    const newMovie = request.body;
     //console.log(data);
-    const getMaxid = await client
-      .db("b39we")
-      .collection("movies")
-      .find()
-      .sort({ id: -1 })
-      .limit(1)
-      .toArray();
-    console.log("maxval", getMaxid[0].id);
+    const getMaxid = await getMaxId();
+    //console.log("maxval", getMaxid[0].id);
     const newid = (parseInt(getMaxid[0].id) + 1).toString();
     const updateData = { id: newid };
-    const movie = await client.db("b39we").collection("movies").insertOne(data);
-
+    await insertNewMovie(newMovie);
     const updatemovie = await updateMoviebyID("", updateData);
-    console.log(updatemovie);
-    // const movies = await addNewMovie();
-    // here find return a curson -> which is actually a pagination. wee need to convert that into an array (.toArray())
+    //console.log(updatemovie);
     response.send({ message: updatemovie });
   }
 );
