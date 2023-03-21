@@ -7,6 +7,7 @@ import {
   createMovies,
   deleteMoviebyID,
 } from "../helper.js";
+import { client } from "../index.js";
 
 const router = express.Router();
 router.get(
@@ -55,20 +56,20 @@ router.put(
 );
 
 //express.json() => is a middleware which converts Data -> json format
-router.post(
-  "/",
-  //express.json(),
-  async function (
-    request,
-    response // similar to Routing setup in react
-  ) {
-    const data = request.body;
-    console.log(data);
-    const result = await createMovies(data);
-    //db.movies.insertMany()
-    response.send(result);
-  }
-);
+// router.post(
+//   "/",
+//   //express.json(),
+//   async function (
+//     request,
+//     response // similar to Routing setup in react
+//   ) {
+//     const data = request.body;
+//     console.log(data);
+//     const result = await createMovies(data);
+//     //db.movies.insertMany()
+//     response.send(result);
+//   }
+// );
 
 router.delete(
   "/:id",
@@ -83,6 +84,34 @@ router.delete(
     result.deletedCount > 0
       ? response.send({ message: "Movie deleted successfully" })
       : response.status(404).send({ message: "Movie not Found" });
+  }
+);
+
+router.post(
+  "/",
+  async function (
+    request,
+    response // similar to Routing setup in react
+  ) {
+    const data = request.body;
+    //console.log(data);
+    const getMaxid = await client
+      .db("b39we")
+      .collection("movies")
+      .find()
+      .sort({ id: -1 })
+      .limit(1)
+      .toArray();
+    console.log("maxval", getMaxid[0].id);
+    const newid = (parseInt(getMaxid[0].id) + 1).toString();
+    const updateData = { id: newid };
+    const movie = await client.db("b39we").collection("movies").insertOne(data);
+
+    const updatemovie = await updateMoviebyID("", updateData);
+    console.log(updatemovie);
+    // const movies = await addNewMovie();
+    // here find return a curson -> which is actually a pagination. wee need to convert that into an array (.toArray())
+    response.send({ message: updatemovie });
   }
 );
 
