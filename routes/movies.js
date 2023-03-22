@@ -104,7 +104,7 @@ router.post(
     const updateData = { id: newid };
     await insertNewMovie(newMovie);
     const updatemovie = await updateMoviebyID("", updateData);
-    //console.log(updatemovie);
+    console.log(updateData);
     response.send({ message: updatemovie });
   }
 );

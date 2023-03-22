@@ -45,6 +45,7 @@ router.post(
     const { userName, password } = request.body;
 
     const userFromDb = await getUserByName(userName);
+    console.log("here to get data for", userName);
     const storedPassword = userFromDb.hashedPassword;
     const isPasswordMatch = await bcrypt.compare(password, storedPassword);
     if (!userFromDb || !isPasswordMatch) {

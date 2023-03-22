@@ -25,7 +25,7 @@ app.get(
     request,
     response // similar to Routing setup in react
   ) {
-    response.send("🙋‍♂️, 🌏 🎊✨ HELLO");
+    response.send("🙋‍♂️, 🌏 🎊✨ reactpractice backend");
   }
 );
 
